@@ -1,0 +1,8 @@
+{
+  "goid": "7f0ca896e3b55141e1e6d32df58e2a2f",
+  "name": "operator.environment",
+  "checksum": "2304d26eeb6e3a0e928c3bb9ca5e369a53dd2fce",
+  "description": "l7Operator GW Env",
+  "hiddenProperty": false,
+  "value": "Development"
+}

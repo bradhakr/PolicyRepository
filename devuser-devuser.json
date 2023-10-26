@@ -1,0 +1,12 @@
+{
+  "goid": "7f0ca896e3b55141e1e6d32df58e2a3f",
+  "name": "devuser",
+  "login": "devuser",
+  "checksum": "dcc8f757f2e95e1eba0095b7918939019387aa2c",
+  "enabled": true,
+  "password": "$6$ihz9m2quu46xA0Jr$shNbjcr9dQ8XRpHheeC4jCpfwvWKMXGQkywzNToFVvfFd02PYZYLf2A2L8rbkpmLpU1dZYrb0G7989SPXiEnq/",
+  "firstName": "Development",
+  "lastName": "User",
+  "email": "dev.user@broadcom.com",
+  "memberOf": []
+}
