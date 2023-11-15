@@ -1,0 +1,11 @@
+{
+  "goid": "7f0ca896e3b55141e1e6d32df591dcfa",
+  "guid": "c7f1451c-9b20-40bd-8b57-8ec5e9a2464f",
+  "name": "Migration-GetGatewayInfoHeaders",
+  "checksum": "6117712db4c3dbed7ecdb37b00fac46e387c98c5",
+  "folderPath": "/Migration",
+  "soap": false,
+  "policy": {
+    "xml": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<wsp:Policy xmlns:L7p=\"http://www.layer7tech.com/ws/policy\" xmlns:wsp=\"http://schemas.xmlsoap.org/ws/2002/12/policy\">\n    <wsp:All wsp:Usage=\"Required\">\n        <L7p:CommentAssertion>\n            <L7p:Comment stringValue=\"Policy Fragment: Migration-GetGatewayInfoHeaders\"/>\n        </L7p:CommentAssertion>\n        <L7p:AddHeader>\n            <L7p:HeaderName stringValue=\"Access-Control-Allow-Credentials\"/>\n            <L7p:HeaderValue stringValue=\"${allowCredentials}\"/>\n            <L7p:RemoveExisting booleanValue=\"true\"/>\n            <L7p:Target target=\"RESPONSE\"/>\n        </L7p:AddHeader>\n        <L7p:AddHeader>\n            <L7p:HeaderName stringValue=\"Access-Control-Allow-Origin\"/>\n            <L7p:HeaderValue stringValue=\"${allowOrigin}\"/>\n            <L7p:RemoveExisting booleanValue=\"true\"/>\n            <L7p:Target target=\"RESPONSE\"/>\n        </L7p:AddHeader>\n        <L7p:AddHeader>\n            <L7p:HeaderName stringValue=\"Access-Control-Allow-Methods\"/>\n            <L7p:HeaderValue stringValue=\"${allowMethods}\"/>\n            <L7p:RemoveExisting booleanValue=\"true\"/>\n            <L7p:Target target=\"RESPONSE\"/>\n        </L7p:AddHeader>\n        <L7p:AddHeader>\n            <L7p:HeaderName stringValue=\"Access-Control-Allow-Headers\"/>\n            <L7p:HeaderValue stringValue=\"${allowHeaders}\"/>\n            <L7p:RemoveExisting booleanValue=\"true\"/>\n            <L7p:Target target=\"RESPONSE\"/>\n        </L7p:AddHeader>\n        <L7p:AddHeader>\n            <L7p:HeaderName stringValue=\"Method\"/>\n            <L7p:HeaderValue stringValue=\"${respMethod}\"/>\n            <L7p:RemoveExisting booleanValue=\"true\"/>\n            <L7p:Target target=\"RESPONSE\"/>\n        </L7p:AddHeader>\n    </wsp:All>\n</wsp:Policy>\n"
+  }
+}
