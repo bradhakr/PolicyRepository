@@ -102,11 +102,11 @@
   ],
   "properties": {
     "meta": {
-      "id": "d97d9571-2ba3-4ccb-963c-8692aa5b7357",
-      "name": "Gateway Graphman Bundle - 2024-12-30T22:50:41.943Z",
+      "id": "3cdc7aee-68b8-4465-bc6a-ecdc4a6f33c9",
+      "name": "Gateway Graphman Bundle - 2025-01-02T20:34:19.227Z",
       "author": "admin",
       "hostname": "ssggw.gcp.security.broadcom.com",
-      "timestamp": "2024-12-30T22:50:41.943Z"
+      "timestamp": "2025-01-02T20:34:19.227Z"
     },
     "defaultAction": "NEW_OR_UPDATE"
   }
