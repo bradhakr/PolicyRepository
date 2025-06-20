@@ -1,0 +1,10 @@
+{
+  "meta": {
+    "id": "af44b9e5-6cde-4f33-a753-be91fa5532b1",
+    "name": "Gateway Graphman Bundle - 2025-06-20T21:38:35.763Z",
+    "author": "bradhakr",
+    "hostname": "ssggw.gke.security.broadcom.com",
+    "timestamp": "2025-06-20T21:38:35.763Z"
+  },
+  "defaultAction": "NEW_OR_UPDATE"
+}

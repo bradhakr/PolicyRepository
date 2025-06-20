@@ -1,0 +1,12 @@
+{
+  "goid": "7f0ca896e3b55141e1e6d32df591dcfa",
+  "guid": "c7f1451c-9b20-40bd-8b57-8ec5e9a2464f",
+  "name": "Migration-GetGatewayInfoHeaders",
+  "policyType": "FRAGMENT",
+  "checksum": "a48a4c6408d947d04650e19bb3b0dcd95daee9ee",
+  "folderPath": "/Migration",
+  "soap": false,
+  "policy": {
+    "json": "{\"All\":[{\"Comment\":\"Policy Fragment: Migration-GetGatewayInfoHeaders\"},{\"AddHeader\":{\"headerName\":\"Access-Control-Allow-Credentials\",\"headerValue\":\"${allowCredentials}\",\"removeExisting\":true,\"target\":\"RESPONSE\"}},{\"AddHeader\":{\"headerName\":\"Access-Control-Allow-Origin\",\"headerValue\":\"${allowOrigin}\",\"removeExisting\":true,\"target\":\"RESPONSE\"}},{\"AddHeader\":{\"headerName\":\"Access-Control-Allow-Methods\",\"headerValue\":\"${allowMethods}\",\"removeExisting\":true,\"target\":\"RESPONSE\"}},{\"AddHeader\":{\"headerName\":\"Access-Control-Allow-Headers\",\"headerValue\":\"${allowHeaders}\",\"removeExisting\":true,\"target\":\"RESPONSE\"}},{\"AddHeader\":{\"headerName\":\"Method\",\"headerValue\":\"${respMethod}\",\"removeExisting\":true,\"target\":\"RESPONSE\"}}]}"
+  }
+}
