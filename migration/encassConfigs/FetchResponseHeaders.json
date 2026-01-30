@@ -3,7 +3,7 @@
   "guid": "d049dd6f-250f-477a-bfa3-262887f5ead0",
   "name": "FetchResponseHeaders",
   "checksum": "967403511e9491ce3e4d03139e5ef3980c65413c",
-  "description": "Fetch Response Headers - Updated",
+  "description": "Fetch Response Headers",
   "policyName": "Migration-GetGatewayInfoHeaders",
   "encassArgs": [
     {

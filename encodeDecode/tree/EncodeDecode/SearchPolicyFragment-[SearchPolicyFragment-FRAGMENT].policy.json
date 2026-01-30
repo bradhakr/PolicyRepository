@@ -1,0 +1,12 @@
+{
+  "goid": "baed4fbc8d7802986043d0666e54da5d",
+  "guid": "75721189-f534-4e2c-be95-8420b912f20c",
+  "name": "SearchPolicyFragment",
+  "policyType": "FRAGMENT",
+  "checksum": "05e121523668ea8619c2dbcc10638b43033f4cea",
+  "folderPath": "/EncodeDecode",
+  "soap": false,
+  "policy": {
+    "json": "{{SearchPolicyFragment-[SearchPolicyFragment-FRAGMENT].policy.cjson}}"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "goid": "7f0ca896e3b55141e1e6d32df591dcfa",
+  "guid": "c7f1451c-9b20-40bd-8b57-8ec5e9a2464f",
+  "name": "Migration-GetGatewayInfoHeaders",
+  "policyType": "FRAGMENT",
+  "checksum": "a48a4c6408d947d04650e19bb3b0dcd95daee9ee",
+  "folderPath": "/Migration",
+  "soap": false,
+  "policy": {
+    "json": "{{Migration-GetGatewayInfoHeaders-[Migration-GetGatewayInfoHeaders-FRAGMENT].policy.cjson}}"
+  }
+}

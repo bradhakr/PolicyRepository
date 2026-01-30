@@ -1,0 +1,19 @@
+{
+  "goid": "4259b6831bdff2b134949fe34e78e96b",
+  "guid": "982cbeff-a63f-4090-8795-7664768e6af1",
+  "name": "Encode-Decode Payload",
+  "resolutionPath": "/rest/data/*",
+  "serviceType": "WEB_API",
+  "checksum": "70e3eef23531d46354e4dc462b624335621d16ec",
+  "enabled": true,
+  "folderPath": "/EncodeDecode",
+  "methodsAllowed": [
+    "POST"
+  ],
+  "tracingEnabled": false,
+  "wssProcessingEnabled": false,
+  "laxResolution": false,
+  "policy": {
+    "json": "{{Encode-Decode Payload-[+rest+data++-WEB_API].service.cjson}}"
+  }
+}

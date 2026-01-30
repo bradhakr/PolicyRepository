@@ -1,0 +1,509 @@
+{
+  "All": [
+    {
+      "Comment": "************************************************************"
+    },
+    {
+      "Comment": "API :- Encode-Decode Proxy"
+    },
+    {
+      "Comment": "API Group :- REST Encryption"
+    },
+    {
+      "Comment": "API TYPE :- REST"
+    },
+    {
+      "Comment": "Author: Balaji Radhakrishnan"
+    },
+    {
+      "Comment": "************************************************************"
+    },
+    {
+      "OneOrMore": [
+        {
+          "All": [
+            {
+              "SetVariable": {
+                "expression": "429",
+                "variable": "RespCode"
+              }
+            },
+            {
+              "RateLimit": {
+                "counterName": "PRESET(cc5c46ac5ee72eac)${request.clientid}",
+                "hardLimit": true,
+                "maxRequestsPerSecond": "3",
+                "splitRateLimitAcrossNodes": false
+              },
+              ".properties": {
+                ".enabled": false
+              }
+            },
+            {
+              "DistributedRateLimit": {
+                "burstLimit": "2",
+                "counterId": "45b13d2402a8cda8-${request.clientid}",
+                "counterPrefix": "45b13d2402a8cda8",
+                "limitEachCounterType": "User or IP",
+                "limitExceededOption": "Throttle",
+                "limitRequests": "6",
+                "rateLimitUnit": "Minute"
+              },
+              ".properties": {
+                ".enabled": false
+              }
+            },
+            {
+              "SetVariable": {
+                "expression": "425",
+                "variable": "RespCode"
+              },
+              ".properties": {
+                ".enabled": false
+              }
+            },
+            {
+              "SetVariable": {
+                "expression": "{ \"Exception\": \"Request Failed\",\r\n  \"Description\": \"willing to risk processing a request that might be replayed. \" }",
+                "variable": "Error"
+              },
+              ".properties": {
+                ".enabled": false
+              }
+            },
+            {
+              "SetVariable": {
+                "expression": "{ \"Exception\": \"Throttling Failed\",\r\n  \"Description\": \"Exception due to Quota Limit - Counter max ${counter.max}.\" }",
+                "variable": "Error"
+              }
+            },
+            {
+              "ThroughputQuota": {
+                "counterName": "PRESET(5a84cc2180ba19cb)${request.tcp.remoteAddress}",
+                "global": true,
+                "quota": "5",
+                "synchronous": false,
+                "timeUnit": "minute"
+              }
+            },
+            {
+              "WssReplayProtection": {},
+              ".properties": {
+                ".enabled": false
+              }
+            }
+          ]
+        },
+        {
+          "All": [
+            {
+              "CustomizeErrorResponse": {
+                "content": "${Error}",
+                "contentType": "application/json; charset=UTF-8",
+                "extraHeaders": [
+                  {
+                    ".type": "nameValuePair",
+                    "key": "l7-resp-code",
+                    "value": "${RespCode}"
+                  }
+                ],
+                "httpStatus": "${RespCode}",
+                "includePolicyDownloadURL": true
+              }
+            },
+            {
+              "RaiseError": {}
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "All": [
+        {
+          "SetVariable": {
+            "expression": "${request.mainpart}",
+            "variable": "encodedData"
+          }
+        },
+        {
+          "SetVariable": {
+            "expression": "${request.url.path}",
+            "variable": "operation"
+          }
+        },
+        {
+          "SetVariable": {
+            "expression": "",
+            "variable": "respData"
+          }
+        },
+        {
+          "SetVariable": {
+            "expression": "",
+            "variable": "OpnData"
+          }
+        },
+        {
+          "SetVariable": {
+            "expression": "200",
+            "variable": "respCode"
+          }
+        },
+        {
+          "OneOrMore": [
+            {
+              "All": [
+                {
+                  "ComparisonAssertion": {
+                    "caseSensitive": false,
+                    "expression1": "${operation}",
+                    "operator": null,
+                    "predicates": [
+                      {
+                        ".type": ":dataType",
+                        "type": "string"
+                      },
+                      {
+                        ".type": ":binary",
+                        "operator": "CONTAINS",
+                        "rightValue": "encode"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "SetVariable": {
+                    "expression": "${request.http.header.encodeAlg}",
+                    "variable": "encodeAlg"
+                  }
+                },
+                {
+                  "OneOrMore": [
+                    {
+                      "All": [
+                        {
+                          "ComparisonAssertion": {
+                            "caseSensitive": false,
+                            "expression1": "${encodeAlg}",
+                            "operator": null,
+                            "predicates": [
+                              {
+                                ".type": ":dataType",
+                                "type": "string"
+                              },
+                              {
+                                ".type": ":binary",
+                                "caseSensitive": false,
+                                "rightValue": "base64"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "EncodeDecode": {
+                            "sourceVariableName": "request.mainpart",
+                            "targetDataType": "string",
+                            "targetVariableName": "OpnData",
+                            "transformType": "BASE64_ENCODE"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "All": [
+                        {
+                          "ComparisonAssertion": {
+                            "caseSensitive": false,
+                            "expression1": "${encodeAlg}",
+                            "operator": null,
+                            "predicates": [
+                              {
+                                ".type": ":dataType",
+                                "type": "string"
+                              },
+                              {
+                                ".type": ":binary",
+                                "caseSensitive": false,
+                                "rightValue": "base32"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "EncodeDecode": {
+                            "sourceVariableName": "request.mainpart",
+                            "targetDataType": "string",
+                            "targetVariableName": "OpnData",
+                            "transformType": "BASE32_ENCODE"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "All": [
+                        {
+                          "ComparisonAssertion": {
+                            "caseSensitive": false,
+                            "expression1": "${encodeAlg}",
+                            "operator": null,
+                            "predicates": [
+                              {
+                                ".type": ":dataType",
+                                "type": "string"
+                              },
+                              {
+                                ".type": ":binary",
+                                "caseSensitive": false,
+                                "rightValue": "base16"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "EncodeDecode": {
+                            "sourceVariableName": "request.mainpart",
+                            "targetDataType": "string",
+                            "targetVariableName": "OpnData",
+                            "transformType": "HEX_ENCODE"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "All": [
+                        {
+                          "SetVariable": {
+                            "expression": "Unable to decide on Operation",
+                            "variable": "OpnData"
+                          }
+                        },
+                        {
+                          "SetVariable": {
+                            "expression": "400",
+                            "variable": "respCode"
+                          }
+                        },
+                        {
+                          "SetVariable": {
+                            "expression": "{\r\n   \"Request\": \"${encodedData}\",\r\n   \"Action\": \"Invalid Algorithm\",\r\n   \"Response\": \"Unable to Encode the Given Data\" \r\n\r\n}",
+                            "variable": "respData"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "All": [
+                    {
+                      "SetVariable": {
+                        "expression": "200",
+                        "variable": "respCode"
+                      }
+                    },
+                    {
+                      "SetVariable": {
+                        "expression": "{\r\n   \"Request\": \"${encodedData}\",\r\n   \"Action\": \"Encode Operation\",\r\n   \"Response\": \"${OpnData}\" \r\n\r\n}",
+                        "variable": "respData"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "All": [
+                {
+                  "ComparisonAssertion": {
+                    "caseSensitive": false,
+                    "expression1": "${operation}",
+                    "operator": null,
+                    "predicates": [
+                      {
+                        ".type": ":dataType",
+                        "type": "string"
+                      },
+                      {
+                        ".type": ":binary",
+                        "operator": "CONTAINS",
+                        "rightValue": "decode"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "SetVariable": {
+                    "expression": "${request.http.header.decodeAlg}",
+                    "variable": "decodeAlg"
+                  }
+                },
+                {
+                  "OneOrMore": [
+                    {
+                      "All": [
+                        {
+                          "ComparisonAssertion": {
+                            "caseSensitive": false,
+                            "expression1": "${decodeAlg}",
+                            "operator": null,
+                            "predicates": [
+                              {
+                                ".type": ":dataType",
+                                "type": "string"
+                              },
+                              {
+                                ".type": ":binary",
+                                "caseSensitive": false,
+                                "rightValue": "base64"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "EncodeDecode": {
+                            "sourceVariableName": "request.mainpart",
+                            "targetDataType": "string",
+                            "targetVariableName": "OpnData",
+                            "transformType": "BASE64_DECODE"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "All": [
+                        {
+                          "ComparisonAssertion": {
+                            "caseSensitive": false,
+                            "expression1": "${decodeAlg}",
+                            "operator": null,
+                            "predicates": [
+                              {
+                                ".type": ":dataType",
+                                "type": "string"
+                              },
+                              {
+                                ".type": ":binary",
+                                "caseSensitive": false,
+                                "rightValue": "base32"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "EncodeDecode": {
+                            "sourceVariableName": "request.mainpart",
+                            "targetDataType": "string",
+                            "targetVariableName": "OpnData",
+                            "transformType": "BASE32_DECODE"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "All": [
+                        {
+                          "ComparisonAssertion": {
+                            "caseSensitive": false,
+                            "expression1": "${decodeAlg}",
+                            "operator": null,
+                            "predicates": [
+                              {
+                                ".type": ":dataType",
+                                "type": "string"
+                              },
+                              {
+                                ".type": ":binary",
+                                "caseSensitive": false,
+                                "rightValue": "base16"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "EncodeDecode": {
+                            "sourceVariableName": "request.mainpart",
+                            "targetDataType": "string",
+                            "targetVariableName": "OpnData",
+                            "transformType": "HEX_DECODE"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "All": [
+                        {
+                          "SetVariable": {
+                            "expression": "Unable to decide on Operation",
+                            "variable": "OpnData"
+                          }
+                        },
+                        {
+                          "SetVariable": {
+                            "expression": "400",
+                            "variable": "respCode"
+                          }
+                        },
+                        {
+                          "SetVariable": {
+                            "expression": "{\r\n   \"Request\": \"${encodedData}\",\r\n   \"Action\": \"Invalid Algorithm\",\r\n   \"Response\": \"Unable to Decode the Given Data\" \r\n\r\n}",
+                            "variable": "respData"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "All": [
+                    {
+                      "SetVariable": {
+                        "expression": "200",
+                        "variable": "respCode"
+                      }
+                    },
+                    {
+                      "SetVariable": {
+                        "expression": "{\r\n   \"Request\": \"${encodedData}\",\r\n   \"Action\": \"Decode Operation\",\r\n   \"Response\": \"${OpnData}\" \r\n\r\n}",
+                        "variable": "respData"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "All": [
+                {
+                  "SetVariable": {
+                    "expression": "Unable to decide on Operation",
+                    "variable": "OpnData"
+                  }
+                },
+                {
+                  "SetVariable": {
+                    "expression": "400",
+                    "variable": "respCode"
+                  }
+                },
+                {
+                  "SetVariable": {
+                    "expression": "{\r\n   \"Request\": \"${encodedData}\",\r\n   \"Action\": \"Invalid Operation\",\r\n   \"Response\": \"${OpnData}\" \r\n\r\n}",
+                    "variable": "respData"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "HardcodedResponse": {
+        "body": "${respData}",
+        "contentType": "applicationt/json; charset=UTF-8",
+        "status": "${respCode}"
+      }
+    }
+  ]
+}

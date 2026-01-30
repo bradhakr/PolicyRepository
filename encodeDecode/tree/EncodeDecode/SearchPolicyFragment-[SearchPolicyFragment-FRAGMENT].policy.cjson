@@ -1,0 +1,84 @@
+{
+  "All": [
+    {
+      "Comment": "Policy Fragment: SearchPOlicyFragment"
+    },
+    {
+      "EvaluateJsonPathExpressionV2": {
+        "expression": "$.0"
+      }
+    },
+    {
+      "OneOrMore": [
+        {
+          "All": [
+            {
+              "SetVariable": {
+                "expression": "${gateway.cluster.hostname}",
+                "variable": "data"
+              }
+            },
+            {
+              "EvaluateJsonPathExpressionV2": {
+                "expression": "$.0"
+              }
+            }
+          ]
+        },
+        {
+          "All": [
+            {
+              "SetVariable": {
+                "expression": "${gateway.cluster.hostname}",
+                "variable": "data"
+              }
+            },
+            {
+              "HttpRouting": {
+                "omitAuthHeaderConnectReuseSystemDefault": true,
+                "protectedServiceUrl": "http://localhost:8080/rest/test03",
+                "proxyPassword": null,
+                "proxyUsername": null,
+                "requestHeaderRules": {
+                  ".type": "httpPassthroughRuleSet",
+                  "forwardAll": true,
+                  "rules": [
+                    {
+                      ".type": "httpPassthroughRule",
+                      "name": "Cookie"
+                    },
+                    {
+                      ".type": "httpPassthroughRule",
+                      "name": "SOAPAction"
+                    }
+                  ]
+                },
+                "requestParamRules": {
+                  ".type": "httpPassthroughRuleSet",
+                  "forwardAll": true,
+                  "rules": []
+                },
+                "responseHeaderRules": {
+                  ".type": "httpPassthroughRuleSet",
+                  "forwardAll": true,
+                  "rules": [
+                    {
+                      ".type": "httpPassthroughRule",
+                      "name": "Set-Cookie"
+                    }
+                  ]
+                },
+                "samlAssertionVersion": 2
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "HardcodedResponse": {
+        "body": "Test!!!"
+      }
+    }
+  ]
+}
